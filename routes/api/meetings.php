@@ -52,10 +52,6 @@ $app->get("/meetings/details/{mid}", function ($request, $response, $args) {
         return $response->withJson(["success" => false, "error" => "NOT_FOUND", "msg" => "Meeting is not found"]);
     }
 
-    // Meeting found, list attendance
-    $attn = R::findAll('attendance', 'meeting_id = :mid', [":mid" => $meeting->id]);
-    $meeting->attendance = $attn;
-
     return $response->withJson(["success" => true, "body" => $meeting]);
 });
 
