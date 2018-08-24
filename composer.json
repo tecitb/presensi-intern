@@ -3,6 +3,8 @@
         "slim/slim": "^3.0",
         "slim/php-view": "^2.2",
         "monolog/monolog": "^1.23",
-        "vlucas/phpdotenv": "^2.5"
+        "vlucas/phpdotenv": "^2.5",
+        "tuupola/slim-jwt-auth": "^3.1",
+        "gabordemooij/redbean": "^5.1"
     }
 }

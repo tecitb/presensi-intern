@@ -1,5 +1,6 @@
 <?php
 // DIC configuration
+use RedBeanPHP\R;
 
 $container = $app->getContainer();
 
@@ -25,3 +26,6 @@ $container['db'] = function($c) {
 	$pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 	return $pdo;
 };
+
+$dbset = $settings['settings']['db'];
+R::setup( 'mysql:host='.$dbset['host'].';dbname='.$dbset['dbname'], $dbset['user'], $dbset['pass']);

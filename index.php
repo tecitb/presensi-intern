@@ -10,7 +10,7 @@ require 'vendor/autoload.php';
 
 header("X-Env-Hostname: ".gethostname());
 
-$dotenv = new Dotenv\Dotenv(dirname(__DIR__));
+$dotenv = new Dotenv\Dotenv(dirname('.'));
 $dotenv->load();
 
 // Instantiate the app
@@ -20,6 +20,12 @@ $app = new \Slim\App($settings);
 
 // Set up dependencies
 require __DIR__ . '/dependencies.php';
+//require __DIR__ . '/middleware.php';
+
+// Load routes
+$app->group('/api', function(\Slim\App $app) {
+    require_once __DIR__ . '/routes/api/meetings.php';
+});
 
 /**
  * Home view

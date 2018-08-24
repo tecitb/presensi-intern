@@ -8,7 +8,9 @@ return [
         'renderer' => [
             'template_path' => __DIR__ . '/../templates/',
         ],
-
+        "jwt" => [
+            'secret' => getenv('JWT_SECRET')
+        ],
         // Monolog settings
         'logger' => [
             'name' => 'slim-app',
