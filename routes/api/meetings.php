@@ -12,10 +12,10 @@ define("MEETING_STATUS_FINISHED", 2);
  * List meetings
  */
 $app->get('/meetings/list/{begin}', function ($request, $response, $args) {
-    /*if ($request->getAttribute("jwt")['isAdmin'] != 1) {
+    if (!DEBUG_DISABLE_AUTH && $request->getAttribute("jwt")['isAdmin'] != 1) {
         $error = ['error' => ['text' => 'Permission denied']];
         return $response->withJson($error);
-    }*/
+    }
 
     return $response->withJson(
         ["success" => true, "body" => array_values(R::find('meeting', 'LIMIT :begin, :total', [":begin" => (int) $args['begin'], ":total" => 20]))]
@@ -26,6 +26,11 @@ $app->get('/meetings/list/{begin}', function ($request, $response, $args) {
  * Create new meeting
  */
 $app->post("/meetings/add", function ($request, $response, $args) {
+    if (!DEBUG_DISABLE_AUTH && $request->getAttribute("jwt")['isAdmin'] != 1) {
+        $error = ['error' => ['text' => 'Permission denied']];
+        return $response->withJson($error);
+    }
+
     $meeting = R::dispense('meeting');
 
     /** @var $request \Slim\Http\Request name */
@@ -46,6 +51,11 @@ $app->post("/meetings/add", function ($request, $response, $args) {
  * Get details of meeting
  */
 $app->get("/meetings/details/{mid}", function ($request, $response, $args) {
+    if (!DEBUG_DISABLE_AUTH && $request->getAttribute("jwt")['isAdmin'] != 1) {
+        $error = ['error' => ['text' => 'Permission denied']];
+        return $response->withJson($error);
+    }
+
     $meeting = R::load('meeting', $args['mid']);
 
     if($meeting->id == 0) {
@@ -60,6 +70,11 @@ $app->get("/meetings/details/{mid}", function ($request, $response, $args) {
  * Update the details of meeting
  */
 $app->put("/meetings/update/{mid}", function ($request, $response, $args) {
+    if (!DEBUG_DISABLE_AUTH && $request->getAttribute("jwt")['isAdmin'] != 1) {
+        $error = ['error' => ['text' => 'Permission denied']];
+        return $response->withJson($error);
+    }
+
     $meeting = R::load('meeting', $args['mid']);
 
     if($meeting->id == 0) {
@@ -84,6 +99,11 @@ $app->put("/meetings/update/{mid}", function ($request, $response, $args) {
  * Delete a meeting
  */
 $app->post("/meetings/delete/{mid}", function ($request, $response, $args) {
+    if (!DEBUG_DISABLE_AUTH && $request->getAttribute("jwt")['isAdmin'] != 1) {
+        $error = ['error' => ['text' => 'Permission denied']];
+        return $response->withJson($error);
+    }
+
     $meeting = R::load('meeting', $args['mid']);
 
     if($meeting->id == 0) {
@@ -101,6 +121,11 @@ $app->post("/meetings/delete/{mid}", function ($request, $response, $args) {
  * Start meeting
  */
 $app->post("/meetings/start/{mid}", function ($request, $response, $args) {
+    if (!DEBUG_DISABLE_AUTH && $request->getAttribute("jwt")['isAdmin'] != 1) {
+        $error = ['error' => ['text' => 'Permission denied']];
+        return $response->withJson($error);
+    }
+
     $meeting = R::load('meeting', $args['mid']);
 
     if($meeting->id == 0) {
@@ -124,6 +149,11 @@ $app->post("/meetings/start/{mid}", function ($request, $response, $args) {
  * Finish meeting
  */
 $app->post("/meetings/finish/{mid}", function ($request, $response, $args) {
+    if (!DEBUG_DISABLE_AUTH && $request->getAttribute("jwt")['isAdmin'] != 1) {
+        $error = ['error' => ['text' => 'Permission denied']];
+        return $response->withJson($error);
+    }
+
     $meeting = R::load('meeting', $args['mid']);
 
     if($meeting->id == 0) {

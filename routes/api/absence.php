@@ -9,10 +9,10 @@ use RedBeanPHP\R;
  * List absence of a meeting
  */
 $app->get('/absence/list/{mid}/{begin}', function ($request, $response, $args) {
-    /*if ($request->getAttribute("jwt")['isAdmin'] != 1) {
+    if (!DEBUG_DISABLE_AUTH && $request->getAttribute("jwt")['isAdmin'] != 1) {
         $error = ['error' => ['text' => 'Permission denied']];
         return $response->withJson($error);
-    }*/
+    }
 
     $meeting = R::load('meeting', $args['mid']);
 
@@ -36,6 +36,11 @@ $app->get('/absence/list/{mid}/{begin}', function ($request, $response, $args) {
  * Urgency: 0 is not urgent, 1 is short notice
  */
 $app->post('/absence/record/{mid}', function ($request, $response, $args) {
+    if (!DEBUG_DISABLE_AUTH && $request->getAttribute("jwt")['isAdmin'] != 1) {
+        $error = ['error' => ['text' => 'Permission denied']];
+        return $response->withJson($error);
+    }
+
     $meeting = R::load('meeting', $args['mid']);
 
     if($meeting->id == 0) {
@@ -74,6 +79,11 @@ $app->post('/absence/record/{mid}', function ($request, $response, $args) {
  * Delete absence record
  */
 $app->post('/absence/delete/{aid}', function ($request, $response, $args) {
+    if (!DEBUG_DISABLE_AUTH && $request->getAttribute("jwt")['isAdmin'] != 1) {
+        $error = ['error' => ['text' => 'Permission denied']];
+        return $response->withJson($error);
+    }
+
     $attn = R::load('absence', $args['aid']);
 
     if($attn->id == 0) {
@@ -93,6 +103,11 @@ $app->post('/absence/delete/{aid}', function ($request, $response, $args) {
  * Update absence
  */
 $app->put('/absence/update/{aid}', function ($request, $response, $args) {
+    if (!DEBUG_DISABLE_AUTH && $request->getAttribute("jwt")['isAdmin'] != 1) {
+        $error = ['error' => ['text' => 'Permission denied']];
+        return $response->withJson($error);
+    }
+
     $abs = R::load('absence', $args['aid']);
 
     if($abs->id == 0) {

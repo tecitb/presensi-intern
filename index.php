@@ -10,6 +10,8 @@ require 'vendor/autoload.php';
 
 header("X-Env-Hostname: ".gethostname());
 
+define("DEBUG_DISABLE_AUTH", true);
+
 $dotenv = new Dotenv\Dotenv(dirname('.'));
 $dotenv->load();
 
