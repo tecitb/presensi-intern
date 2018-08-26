@@ -118,7 +118,7 @@ $app->put("/meetings/update/{mid}", function ($request, $response, $args) {
 /**
  * Delete a meeting
  */
-$app->post("/meetings/delete/{mid}", function ($request, $response, $args) {
+$app->delete("/meetings/delete/{mid}", function ($request, $response, $args) {
     if (!DEBUG_DISABLE_AUTH && $request->getAttribute("jwt")['isAdmin'] != 1) {
         $error = ['error' => ['text' => 'Permission denied']];
         return $response->withJson($error);

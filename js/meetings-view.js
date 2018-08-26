@@ -65,6 +65,24 @@ $(document).ready(function() {
         });
     });
 
+    $("#btn-delete").on('click', function() {
+        if(confirm("Confirm to delete meeting?")) {
+            $("#btn-delete").html("Deleting...").attr("disabled", "disabled");
+            $.ajax({
+                method: "DELETE",
+                url: BASE_URL+"/api/meetings/delete/" + MEETING_ID,
+                headers: {"Authorization": "Bearer " + Cookies.get("token")}
+            }).done(function(msg) {
+                if(msg.success) {
+                    window.location.href = BASE_URL + '/meetings';
+                }
+            }).fail(function(jqXHR, textStatus) {
+                $("#btn-delete").removeAttr("disabled").html("Delete meeting");
+                alert("Request failed: " + textStatus);
+            });
+        }
+    });
+
     loadMeeting(MEETING_ID);
 });
 

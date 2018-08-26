@@ -25,7 +25,7 @@
 
     <div class="row">
         <div class="col-lg-8">
-            <nav aria-label="Quiz Page Navigation">
+            <nav aria-label="Meetings Page Navigation">
                 <ul class="pagination">
                     <li class="page-item"><a class="page-link" onclick="prevPage()">Prev</a></li>
                     <li class="page-item active"><span class="page-link" id="page-no">&nbsp;</span></li>

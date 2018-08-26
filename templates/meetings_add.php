@@ -36,7 +36,7 @@
             </div>
 
             <div class="form-group">
-                <label for="type" class="cols-sm-2 control-label">Type of meeting</label>
+                <label for="is_offline" class="cols-sm-2 control-label">Type of meeting</label>
                 <div class="cols-sm-10">
                     <div class="input-group">
                         <select class="form-control" id="is_offline">
