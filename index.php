@@ -26,6 +26,7 @@ require __DIR__ . '/dependencies.php';
 $app->group('/api', function(\Slim\App $app) {
     require_once __DIR__ . '/routes/api/meetings.php';
     require_once __DIR__ . '/routes/api/attendance.php';
+    require_once __DIR__ . '/routes/api/absence.php';
 });
 
 /**
