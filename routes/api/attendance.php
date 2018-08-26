@@ -39,11 +39,6 @@ $app->post('/attn/record/{mid}', function ($request, $response, $args) {
         return $response->withJson(["success" => false, "error" => "NOT_FOUND", "msg" => "Meeting is not found"]);
     }
 
-    // Check if meeting is started or not finished
-    if($meeting->status != MEETING_STATUS_STARTED) {
-        return $response->withJson(["success" => false, "error" => "MEETING_NOT_STARTED", "msg" => "Meeting is not started or already finished"]);
-    }
-
     // Meeting found, record attendance
 
     /** @var $request \Slim\Http\Request name */
