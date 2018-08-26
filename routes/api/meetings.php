@@ -33,6 +33,7 @@ $app->post("/meetings/add", function ($request, $response, $args) {
     $meeting->location = $request->getParam("location");
     $meeting->scheduled_on = $request->getParam("scheduled_on");
     $meeting->status = MEETING_STATUS_CREATED;
+    $meeting->is_offline = $request->getParam("is_offline") == '1' ? true : false;
     $meeting->started_on = 0;
     $meeting->finished_on = 0;
 
@@ -69,9 +70,10 @@ $app->put("/meetings/update/{mid}", function ($request, $response, $args) {
     // Meeting found, update parameters
 
     /** @var $request \Slim\Http\Request name */
-    $meeting->name = $request->getParam("name");
-    $meeting->location = $request->getParam("location");
-    $meeting->scheduled_on = $request->getParam("scheduled_on");
+    if(!empty($request->getParam("name"))) $meeting->name = $request->getParam("name");
+    if(!empty($request->getParam("location"))) $meeting->location = $request->getParam("location");
+    if(!empty($request->getParam("scheduled_on"))) $meeting->scheduled_on = $request->getParam("scheduled_on");
+    if(!empty($request->getParam("is_offline"))) $meeting->is_offline = $request->getParam("is_offline") == '1' ? true : false;
 
     R::store($meeting);
 
