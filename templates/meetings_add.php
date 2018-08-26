@@ -54,7 +54,7 @@
             <div style="overflow:hidden; margin-top: 8px;" id="dtpicker">
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-md-8">
+                        <div class="col-md-12">
                             <div id="sch"></div>
                         </div>
                     </div>

@@ -88,7 +88,27 @@ $app->put("/meetings/update/{mid}", function ($request, $response, $args) {
     if(!empty($request->getParam("name"))) $meeting->name = $request->getParam("name");
     if(!empty($request->getParam("location"))) $meeting->location = $request->getParam("location");
     if(!empty($request->getParam("scheduled_on"))) $meeting->scheduled_on = $request->getParam("scheduled_on");
-    if(!empty($request->getParam("is_offline"))) $meeting->is_offline = $request->getParam("is_offline") == '1' ? true : false;
+
+    if($request->getParam("is_offline") !== null) $meeting->is_offline = $request->getParam("is_offline") == 1 ? true : false;
+
+    if($request->getParam("status") !== null) {
+        $status = $request->getParam("status");
+        switch ($status) {
+            case MEETING_STATUS_CREATED:
+                $meeting->status = MEETING_STATUS_CREATED;
+                $meeting->started_on = 0;
+                $meeting->finished_on = 0;
+                break;
+            case MEETING_STATUS_STARTED:
+                $meeting->status = MEETING_STATUS_STARTED;
+                $meeting->started_on = time();
+                $meeting->finished_on = 0;
+                break;
+            case MEETING_STATUS_FINISHED:
+                $meeting->status = MEETING_STATUS_FINISHED;
+                $meeting->finished_on = time();
+        }
+    }
 
     R::store($meeting);
 

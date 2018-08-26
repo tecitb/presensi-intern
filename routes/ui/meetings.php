@@ -23,3 +23,13 @@ $app->get('/meetings/add', function ($request, $response, $args) {
     $this->renderer->render($response, "/meetings_add.php", $args);
     return $this->renderer->render($response, "/footer.php", $args);
 });
+
+
+/**
+ * Add meeting view
+ */
+$app->get('/meetings/view/{id}', function ($request, $response, $args) {
+    $this->renderer->render($response, "/header.php", $args);
+    $this->renderer->render($response, "/meetings_view.php", $args);
+    return $this->renderer->render($response, "/footer.php", $args);
+});
