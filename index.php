@@ -12,6 +12,9 @@ header("X-Env-Hostname: ".gethostname());
 
 define("DEBUG_DISABLE_AUTH", true);
 
+define("BASE_URL", getenv("BASE_URL") ?: "http://localhost/presensi-intern");
+define("SERVER_URL", getenv("SERVER_URL") ?: "https://intern.tec.or.id/restsvc/public");
+
 $dotenv = new Dotenv\Dotenv(dirname('.'));
 $dotenv->load();
 
@@ -31,14 +34,15 @@ $app->group('/api', function(\Slim\App $app) {
     require_once __DIR__ . '/routes/api/absence.php';
 });
 
+require_once __DIR__ . '/routes/ui/meetings.php';
+
 /**
  * Home view
  */
-/*$app->get('/', function ($request, $response, $args) {
-    // $this->renderer->render($response, "/header.php", $args);
+$app->get('/', function ($request, $response, $args) {
+    $this->renderer->render($response, "/header.php", $args);
     // $this->renderer->render($response, "/home.php", $args);
-    return $this->renderer->render($response, "/landing.php", $args);
-});*/
-
+    return $this->renderer->render($response, "/footer.php", $args);
+});
 
 $app->run();
