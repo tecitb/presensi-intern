@@ -35,7 +35,7 @@ $(document).ready(function() {
         }).done(function(msg) {
             $(".btn-edit-save[data-target='" + target + "']").removeAttr("disabled").html("Save <i class='fa fa-check'></i>");
             $(target).attr("data-original", value);
-            loadData(msg.body);
+            parseMeeting(msg.body);
         }).fail(function(jqXHR, textStatus) {
             $(".btn-edit-save[data-target='" + target + "']").removeAttr("disabled").html("Save <i class='fa fa-check'></i>");
             alert("Request failed: " + textStatus);
@@ -58,7 +58,7 @@ $(document).ready(function() {
         }).done(function(msg) {
             $("#btn-date-save").removeAttr("disabled").html("Save <i class='fa fa-check'></i>");
             $("#date-show").attr("data-original", sch_on);
-            loadData(msg.body);
+            parseMeeting(msg.body);
         }).fail(function(jqXHR, textStatus) {
             $("#btn-date-save").removeAttr("disabled").html("Save <i class='fa fa-check'></i>");
             alert("Request failed: " + textStatus);
@@ -83,6 +83,10 @@ $(document).ready(function() {
         }
     });
 
+    $("#pills-attn-tab").on('click', function() {
+        loadAttendance(1);
+    });
+
     loadMeeting(MEETING_ID);
 });
 
@@ -94,16 +98,16 @@ function loadMeeting(mid) {
         url: BASE_URL+"/api/meetings/details/" + mid,
         headers: {"Authorization": "Bearer " + Cookies.get("token")}
     }).done(function(msg) {
-        $(".loader").hide();
+        $("#main-loader").hide();
         $("#mview").show();
 
-        loadData(msg.body);
+        parseMeeting(msg.body);
     }).fail(function(jqXHR, textStatus) {
         alert("Request failed: " + textStatus);
     });
 }
 
-function loadData(data) {
+function parseMeeting(data) {
     $("#meeting-name").val(data.name).attr("data-original", data.name);
     $("#meeting-location").val(data.location).attr("data-original", data.location);
     $("#is_offline").val(data.is_offline).attr("data-original", data.is_offline);
@@ -128,4 +132,36 @@ function loadData(data) {
     } else {
         $("#finished-on").val("No data");
     }
+}
+
+var currentPage = 1;
+function loadAttendance(page) {
+    $("#attn-loader").show();
+    let from = (page - 1) * MEETING_PER_PAGE;
+    $.ajax({
+        method: "GET",
+        url: BASE_URL+"/api/attn/list/" + MEETING_ID + "/" + from,
+        headers: {"Authorization": "Bearer " + Cookies.get("token")}
+    }).done(function(msg) {
+        currentPage = page;
+        $("#page-no").text(page);
+        $("#attn-loader").hide();
+        $("#attn-table").show();
+        $("#attn-tbody").html("");
+
+        $.each(msg.body, function(i, val) {
+            var tstring = moment.unix(val.timestamp).tz("Asia/Jakarta").format("DD/MM/YYYY HH:mm:ss");
+            var content = '<tr><td scope="row">' + parseInt(from + i + 1) + '</td><td>' + val.tec_regno + '</td><td>' + val.name + '</td><td>' + tstring + '</td><td></td></tr>';
+            $("#attn-tbody").append(content);
+        });
+    }).fail(function(jqXHR, textStatus) {
+        alert("Request failed: " + textStatus);
+    });
+}
+
+function nextPage() {
+    loadAttendance(currentPage+1);
+}
+function prevPage() {
+    loadAttendance(Math.max(1, currentPage - 1));
 }

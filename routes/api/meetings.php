@@ -7,6 +7,7 @@ use RedBeanPHP\R;
 define("MEETING_STATUS_CREATED", 0);
 define("MEETING_STATUS_STARTED", 1);
 define("MEETING_STATUS_FINISHED", 2);
+define("MEETING_PER_PAGE", 20);
 
 /**
  * List meetings
@@ -18,7 +19,7 @@ $app->get('/meetings/list/{begin}', function ($request, $response, $args) {
     }
 
     return $response->withJson(
-        ["success" => true, "body" => array_values(R::find('meeting', 'LIMIT :begin, :total', [":begin" => (int) $args['begin'], ":total" => 20]))]
+        ["success" => true, "body" => array_values(R::find('meeting', 'LIMIT :begin, :total', [":begin" => (int) $args['begin'], ":total" => MEETING_PER_PAGE]))]
     );
 });
 

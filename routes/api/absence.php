@@ -30,6 +30,30 @@ $app->get('/absence/list/{mid}/{begin}', function ($request, $response, $args) {
 });
 
 /**
+ * Get absence of a meeting of a specific person
+ */
+$app->get('/absence/get/{mid}/{regno}', function ($request, $response, $args) {
+    if (!DEBUG_DISABLE_AUTH && $request->getAttribute("jwt")['isAdmin'] != 1) {
+        $error = ['error' => ['text' => 'Permission denied']];
+        return $response->withJson($error);
+    }
+
+    $meeting = R::load('meeting', $args['mid']);
+
+    if($meeting->id == 0) {
+        // Not found
+        return $response->withJson(["success" => false, "error" => "NOT_FOUND", "msg" => "Meeting is not found"]);
+    }
+
+    // Meeting found, list attendance
+    $abs = R::findAll('absence', 'meeting_id = :mid AND tec_regno = :regno', [":mid" => $meeting->id, ":regno" => $args['regno']]);
+
+    return $response->withJson(
+        ["success" => true, "body" => array_values($abs)]
+    );
+});
+
+/**
  * Record absence
  * Note:
  * Absence type: 0 is not attending, 1 is coming late, 2 is leaving early
@@ -46,11 +70,6 @@ $app->post('/absence/record/{mid}', function ($request, $response, $args) {
     if($meeting->id == 0) {
         // Not found
         return $response->withJson(["success" => false, "error" => "NOT_FOUND", "msg" => "Meeting is not found"]);
-    }
-
-    // Check if meeting is started or not finished
-    if($meeting->status != MEETING_STATUS_STARTED) {
-        return $response->withJson(["success" => false, "error" => "MEETING_NOT_STARTED", "msg" => "Meeting is not started or already finished"]);
     }
 
     // Meeting found, record absence

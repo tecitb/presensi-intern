@@ -1,7 +1,7 @@
 <script type="text/javascript" language="JavaScript" src="<?=BASE_URL?>/js/moment.min.js"></script>
 <script type="text/javascript" language="JavaScript" src="<?=BASE_URL?>/js/moment-timezone-with-data.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js"></script>
-<script type="text/javascript">var MEETING_ID = '<?=addslashes($id)?>';</script>
+<script type="text/javascript">var MEETING_ID = '<?=addslashes($id)?>'; var MEETING_PER_PAGE = '<?=addslashes(MEETING_PER_PAGE)?>';</script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css" /><div class="container" style="margin-top: 24px">
     <div class="row">
         <div class="col-md-12">
@@ -113,40 +113,8 @@
                 <button id="btn-delete" class="btn btn-danger" style="margin-top: 48px;">Delete meeting</button>
             </div>
             <div class="tab-pane fade" id="pills-attn" role="tabpanel" aria-labelledby="pills-attn-tab">
-                <div style="margin-top: 16px; margin-bottom: 16px;">
-                    <div class="card">
-                        <div class="card-body">
-                            <div align="right">
-                                <a href="#" onclick="$('#attn-record').slideToggle(100); return false;">Record attendance <i class="fas fa-chevron-down"></i></a>
-                            </div>
-                            <div id="attn-record" style="display: none;">
-                                <div class="row">
-                                    <div class="col-5">
-                                        <label for="tec_regno" class="cols-sm-2 control-label">TEC registration number</label>
-                                        <div class="cols-sm-10">
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" id="tec_regno" placeholder="TEC001">
-                                            </div>
-                                            <div class="invalid-feedback">
-                                                Invalid registration number
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-7">
-                                        <label for="notes" class="cols-sm-2 control-label">Notes or remarks</label>
-                                        <div class="cols-sm-10">
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" id="notes" placeholder="Fill with late reasons, etc.">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button style="margin-top: 16px;" class="btn btn-primary btn-sm">Record <i class="fa fa-check"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <table class="table table-striped">
+                <div id="attn-loader" class="loader loader-small"></div>
+                <table class="table table-striped" id="attn-table">
                     <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -156,28 +124,7 @@
                         <th scope="col">Action</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                        <td>@fat</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
-                        <td>@twitter</td>
-                    </tr>
+                    <tbody id="attn-tbody">
                     </tbody>
                 </table>
                 <div align="center" style="margin-top: 48px;">
@@ -187,10 +134,12 @@
                         <li class="page-item"><a class="page-link" onclick="nextPage()">Next</a></li>
                     </ul>
                 </div>
+                <a href="<?=BASE_URL?>/meetings/rdattn/<?=$id?>" target="rdattn"><button id="btn-delete" class="btn btn-secondary">Record attendance</button></a>
+
             </div>
             <div class="tab-pane fade" id="pills-absence" role="tabpanel" aria-labelledby="pills-absence-tab"></div>
         </div>
     </div>
-    <div class="loader loader-big"></div>
+    <div id="main-loader" class="loader loader-big"></div>
 </div>
 <script src="<?=BASE_URL?>/js/meetings-view.js" defer="defer"></script>
