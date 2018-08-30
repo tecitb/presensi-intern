@@ -35,6 +35,7 @@ $app->group('/api', function(\Slim\App $app) {
 });
 
 require_once __DIR__ . '/routes/ui/meetings.php';
+require_once __DIR__ . '/routes/ui/wibu.php';
 
 /**
  * Home view

@@ -7,6 +7,8 @@
         height: 80px;
         overflow: hidden;
         border-radius: 100%;
+        background-image: url('<?=BASE_URL?>/img/avatar.png');
+        background-size: cover;
     }
     .card-inp {
         display: none;
@@ -55,8 +57,7 @@
             <div class="card card-inp" style="margin-top: 16px;" id="person-card">
                 <div class="card-header">Person details</div>
                 <div class="card-body" style="background: #fbfbfb">
-                    <div class="img-circle">
-                        <img src="<?=BASE_URL?>/img/avatar.png" width="100%" id="profile-url" />
+                    <div class="img-circle" id="profile-url">
                     </div>
                     <h4 style="margin-top: 16px; margin-bottom: 0;" id="name"></h4>
                     <h5 style="margin: 0;" id="tec_regno"></h5>
