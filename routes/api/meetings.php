@@ -64,6 +64,9 @@ $app->get("/meetings/details/{mid}", function ($request, $response, $args) {
         return $response->withJson(["success" => false, "error" => "NOT_FOUND", "msg" => "Meeting is not found"]);
     }
 
+    $totalattn = R::count('attendance', 'meeting_id = :mid', [':mid' => $meeting->id]);
+    $meeting->attendee = $totalattn;
+
     return $response->withJson(["success" => true, "body" => $meeting]);
 });
 

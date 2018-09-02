@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7a8621f56ca6e4b8ed3d830068f32ca6",
+    "content-hash": "53168d8a8aff6f78da270b07b2e63db9",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -36,6 +36,49 @@
             "description": "Promoting the interoperability of container objects (DIC, SL, etc.)",
             "homepage": "https://github.com/container-interop/container-interop",
             "time": "2017-02-14T19:40:03+00:00"
+        },
+        {
+            "name": "deepstreamhub/deepstream.io-client-php",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/deepstreamIO/deepstream.io-client-php.git",
+                "reference": "c979ec7f5fde35f79c6f735bdc87811f7ea2f05c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/deepstreamIO/deepstream.io-client-php/zipball/c979ec7f5fde35f79c6f735bdc87811f7ea2f05c",
+                "reference": "c979ec7f5fde35f79c6f735bdc87811f7ea2f05c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0|^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Deepstreamhub\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "deepstreamHub GmbH",
+                    "homepage": "https://deepstreamhub.com/"
+                }
+            ],
+            "description": "the php client for deepstreamHub",
+            "homepage": "https://github.com/deepstreamIO/deepstream.io-client-php",
+            "keywords": [
+                "datasync",
+                "pubsub",
+                "realtime",
+                "rpc"
+            ],
+            "time": "2017-07-03T08:56:34+00:00"
         },
         {
             "name": "firebase/php-jwt",

@@ -5,14 +5,17 @@ var ds;
 var queue = [];
 let ENTRY_DELAY = 10000;
 let DISPLAY_DURATION = 5000;
+var time = new Date();
+
 $(document).ready(function() {
-    ds = deepstream('admin.didithilmy.com:6020');
+    ds = deepstream(DEEPSTREAM_URL);
     ds.login();
 
     ds.event.subscribe('event-attn-' + MEETING_ID, function(eventData){
         console.log(eventData);
         if(eventData.nickname !== undefined) {
             console.log(eventData.nickname + " is entering the premises...");
+            $("#attn-txt").text("Attending: " + eventData.attendee);
             setTimeout(function() {
                 queue.push(eventData.nickname);
             }, ENTRY_DELAY);
@@ -26,6 +29,10 @@ $(document).ready(function() {
             changeText("");
         }
     }, DISPLAY_DURATION);
+
+    setInterval(function() {
+        $("#time").text(("0" + time.getHours()).slice(-2)   + ":" + ("0" + time.getMinutes()).slice(-2));
+    }, 1000);
 
     loadMeeting();
 });
@@ -67,4 +74,5 @@ function loadMeeting() {
 function parseMeeting(data) {
     $("#meeting-name").text(data.name);
     $("#meeting-location").text(data.location);
+    $("#attn-txt").text("Attending: " + data.attendee);
 }

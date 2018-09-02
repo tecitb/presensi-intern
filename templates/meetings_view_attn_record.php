@@ -1,6 +1,10 @@
 <script type="text/javascript" language="JavaScript" src="<?=BASE_URL?>/js/moment.min.js"></script>
 <script type="text/javascript" language="JavaScript" src="<?=BASE_URL?>/js/moment-timezone-with-data.min.js"></script>
-<script type="text/javascript">var MEETING_ID = '<?=addslashes($id)?>';</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/deepstream.io-client-js/2.3.0/deepstream.min.js"></script>
+<script type="text/javascript">
+    const MEETING_ID = '<?=addslashes($id)?>';
+    const DEEPSTREAM_URL = '<?=getenv("DEEPSTREAM_URL")?>';
+</script>
 <style type="text/css">
     .img-circle {
         width: 80px;

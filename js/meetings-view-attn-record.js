@@ -2,10 +2,15 @@
  * Created by didithilmy on 26/08/18.
  */
 
+var ds;
+let sbsId = "event-attn-" + MEETING_ID;
 $(document).ready(function() {
     loadMeeting().done(function(msg) {
        parseMeeting(msg.body);
     });
+
+    ds = deepstream(DEEPSTREAM_URL);
+    ds.login();
 
     $("#btn-lookup").on('click', function() {
         getUserDetails();
@@ -144,6 +149,8 @@ function recordAttendance() {
             }
 
             $(".card-inp").hide();
+
+            ds.event.emit(sbsId, {nickname: currentUser.nickname, attendee: msg.total_attendee});
             currentUser = null;
         }).fail(function (jqXHR, textStatus) {
             alert("Request failed: " + textStatus);

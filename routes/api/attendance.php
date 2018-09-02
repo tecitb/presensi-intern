@@ -1,5 +1,6 @@
 <?php
 use RedBeanPHP\R;
+
 /**
  * Attendance API routes
  */
@@ -56,8 +57,10 @@ $app->post('/attn/record/{mid}', function ($request, $response, $args) {
 
     $id = R::store($attn);
 
+    $totalattn = R::count('attendance', 'meeting_id = :mid', [':mid' => $meeting->id]);
+
     return $response->withJson(
-        ["success" => true, "id" => $id]
+        ["success" => true, "id" => $id, "total_attendee" => $totalattn]
     );
 });
 

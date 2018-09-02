@@ -20,6 +20,7 @@
         const BASE_URL = "<?=BASE_URL?>";
         const SERVER_URL = "<?=SERVER_URL?>";
         const MEETING_ID = "<?=$mid?>";
+        const DEEPSTREAM_URL = "<?=getenv("DEEPSTREAM_URL")?>";
     </script>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -64,6 +65,12 @@
             bottom: 32px;
         }
 
+        #attn {
+            position: fixed;
+            right: 32px;
+            bottom: 32px;
+        }
+
         .hero {
             height: 110px;
             position: fixed;
@@ -85,13 +92,16 @@
             <h5 id="meeting-location"></h5>
         </div>
         <div class="col-sm-6" align="right">
-            <h5>30 August 2018</h5>
-            <h1>23:33</h1>
+            <h5 id="date"><?=date("D, d F Y")?></h5>
+            <h1 id="time">23:33</h1>
         </div>
     </div>
 </div>
 <div class="logo">
     <img src="<?=BASE_URL?>/img/logo-white.svg" width="70" />
+</div>
+<div id="attn">
+    <h5 id="attn-txt">Attending: 0</h5>
 </div>
 <div class="hero" id="hero-1" align="center">
     <h1></h1>
