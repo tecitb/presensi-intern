@@ -5,8 +5,7 @@ var ds;
 var queue = [];
 let ENTRY_DELAY = 10000;
 let DISPLAY_DURATION = 5000;
-var time = new Date();
-
+var time;
 $(document).ready(function() {
     ds = deepstream(DEEPSTREAM_URL);
     ds.login();
@@ -30,6 +29,7 @@ $(document).ready(function() {
         }
     }, DISPLAY_DURATION);
 
+    time = new Date();
     setInterval(function() {
         $("#time").text(("0" + time.getHours()).slice(-2)   + ":" + ("0" + time.getMinutes()).slice(-2));
     }, 1000);
