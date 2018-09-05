@@ -30,6 +30,37 @@ $app->get('/attn/list/{mid}/{begin}', function ($request, $response, $args) {
 });
 
 /**
+ * Get attendance details
+ */
+$app->get('/attn/details/{attn_id}', function ($request, $response, $args) {
+    if (!DEBUG_DISABLE_AUTH && $request->getAttribute("jwt")['isAdmin'] != 1) {
+        $error = ['error' => ['text' => 'Permission denied']];
+        return $response->withJson($error);
+    }
+
+    // Meeting found, list attendance
+    $attn = R::load('attendance', $args['attn_id']);
+
+    if($attn->id == 0) {
+        // Not found
+        return $response->withJson(["success" => false, "error" => "NOT_FOUND", "msg" => "Attendance record is not found"]);
+    }
+
+
+    $meeting = R::load('meeting', $attn->meeting_id);
+
+    if($meeting->id == 0) {
+        // Not found
+        return $response->withJson(["success" => false, "error" => "NOT_FOUND", "msg" => "Meeting is not found"]);
+    }
+
+    return $response->withJson(
+        ["success" => true, "attendance" => $attn, "meeting" => $meeting]
+    );
+});
+
+
+/**
  * Record attendance
  */
 $app->post('/attn/record/{mid}', function ($request, $response, $args) {

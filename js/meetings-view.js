@@ -151,7 +151,7 @@ function loadAttendance(page) {
 
         $.each(msg.body, function(i, val) {
             var tstring = moment.unix(val.timestamp).tz("Asia/Jakarta").format("DD/MM/YYYY HH:mm:ss");
-            var content = '<tr><td scope="row">' + parseInt(from + i + 1) + '</td><td>' + val.tec_regno + '</td><td>' + val.name + '</td><td>' + tstring + '</td><td></td></tr>';
+            var content = '<tr><td scope="row">' + parseInt(from + i + 1) + '</td><td>' + val.tec_regno + '</td><td>' + val.name + '</td><td>' + tstring + '</td><td><a href="' + BASE_URL + '/meetings/attn/' + val.id + '">Edit</a> &nbsp; <a href="">Delete</a></td></tr>';
             $("#attn-tbody").append(content);
         });
     }).fail(function(jqXHR, textStatus) {

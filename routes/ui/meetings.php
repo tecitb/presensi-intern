@@ -43,3 +43,14 @@ $app->get('/meetings/rdattn/{id}', function ($request, $response, $args) {
     $this->renderer->render($response, "/meetings_view_attn_record.php", $args);
     return $this->renderer->render($response, "/footer.php", $args);
 });
+
+
+
+/**
+ * Add meeting view
+ */
+$app->get('/meetings/attn/{id}', function ($request, $response, $args) {
+    $this->renderer->render($response, "/header.php", $args);
+    $this->renderer->render($response, "/meetings_view_attn_edit.php", $args);
+    return $this->renderer->render($response, "/footer.php", $args);
+});
