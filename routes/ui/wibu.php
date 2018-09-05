@@ -10,5 +10,7 @@
  * WiBU view
  */
 $app->get('/wibu/{mid}', function ($request, $response, $args) {
+    $args['duration'] = $request->getParam("duration");
+    $args['delay'] = $request->getParam("delay");
     return $this->renderer->render($response, "/wibu.php", $args);
 });

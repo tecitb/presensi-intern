@@ -67,6 +67,7 @@ function getUserDetails() {
 
         $("#name").text(msg.name);
         $("#tec_regno").text(msg.tec_regno);
+        $("#attn-notes").val("");
         if(msg.profile_picture_url != undefined) $("#profile-url").css("background-image", "url(" + msg.profile_picture_url + ")");
         else $("#profile-url").css("background-image", "");
 

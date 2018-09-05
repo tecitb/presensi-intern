@@ -20,6 +20,8 @@
         const BASE_URL = "<?=BASE_URL?>";
         const SERVER_URL = "<?=SERVER_URL?>";
         const MEETING_ID = "<?=$mid?>";
+        const DISPLAY_DURATION = parseInt("<?=@$duration ?: 5000?>");
+        const ENTRY_DELAY = parseInt("<?=@$delay ?: 10000?>");
         const DEEPSTREAM_URL = "<?=getenv("DEEPSTREAM_URL")?>";
     </script>
 

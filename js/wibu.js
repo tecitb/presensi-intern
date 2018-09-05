@@ -3,8 +3,6 @@
  */
 var ds;
 var queue = [];
-let ENTRY_DELAY = 10000;
-let DISPLAY_DURATION = 5000;
 var time;
 $(document).ready(function() {
     ds = deepstream(DEEPSTREAM_URL);

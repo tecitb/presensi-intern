@@ -9,6 +9,16 @@ $(document).ready(function() {
        getUserDetails(msg.attendance.tec_regno);
        getAbsenceNotices(msg.meeting.id, msg.attendance.tec_regno);
     });
+
+    $("#btn-update").on('click', function() {
+        updateNotes();
+    });
+
+    $("#btn-delete").on('click', function() {
+        if(confirm("Confirm to delete attendance record?")) {
+            deleteRecord();
+        }
+    });
 });
 
 var currentUser;
@@ -112,6 +122,47 @@ function getAbsenceNotices(meeting_id, tec_regno) {
             $("#abs-notices").append(content);
         });
     }).fail(function(jqXHR, textStatus) {
+        alert("Request failed: " + textStatus);
+    });
+}
+
+function updateNotes() {
+    $("#btn-update").attr("disabled", "disabled").text("Updating...");
+    $.ajax({
+        method: "PUT",
+        url: BASE_URL+"/api/attn/notes/" + ATTN_ID,
+        data: {notes: $("#attn-notes").val()},
+        headers: {"Authorization": "Bearer " + Cookies.get("token")}
+    }).done(function(msg) {
+        $("#btn-update").removeAttr("disabled", "disabled").text("Update notes");
+
+        if(msg.success !== true) {
+            console.log("Failed updating attendance notes");
+            return;
+        }
+    }).fail(function(jqXHR, textStatus) {
+        $("#btn-update").removeAttr("disabled", "disabled").text("Update notes");
+        alert("Request failed: " + textStatus);
+    });
+}
+
+function deleteRecord() {
+    $("#btn-delete").attr("disabled", "disabled").text("Deleting...");
+    $.ajax({
+        method: "POST",
+        url: BASE_URL+"/api/attn/delete/" + ATTN_ID,
+        headers: {"Authorization": "Bearer " + Cookies.get("token")}
+    }).done(function(msg) {
+        $("#btn-delete").removeAttr("disabled", "disabled").text("Delete record");
+
+        if(msg.success !== true) {
+            console.log("Failed deleting attendance record");
+            return;
+        }
+
+        window.history.back();
+    }).fail(function(jqXHR, textStatus) {
+        $("#btn-update").removeAttr("disabled", "disabled").text("Update notes");
         alert("Request failed: " + textStatus);
     });
 }

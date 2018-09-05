@@ -129,17 +129,42 @@
                 </table>
                 <div align="center" style="margin-top: 48px;">
                     <ul class="pagination">
-                        <li class="page-item"><a class="page-link" onclick="prevPage()">Prev</a></li>
+                        <li class="page-item"><a class="page-link" onclick="attnPrevPage()">Prev</a></li>
                         <li class="page-item active"><span class="page-link" id="page-no">1</span></li>
-                        <li class="page-item"><a class="page-link" onclick="nextPage()">Next</a></li>
+                        <li class="page-item"><a class="page-link" onclick="attnNextPage()">Next</a></li>
                     </ul>
                 </div>
-                <a href="<?=BASE_URL?>/meetings/rdattn/<?=$id?>" target="rdattn"><button id="btn-delete" class="btn btn-secondary">Record attendance</button></a>
+                <a href="<?=BASE_URL?>/meetings/rdattn/<?=$id?>" target="_blank"><button id="btn-delete" class="btn btn-secondary">Record attendance</button></a>
+                <a href="<?=BASE_URL?>/wibu/<?=$id?>" target="_blank"><button class="btn btn-secondary">WiBU</button></a>
 
             </div>
-            <div class="tab-pane fade" id="pills-absence" role="tabpanel" aria-labelledby="pills-absence-tab"></div>
+            <div class="tab-pane fade" id="pills-absence" role="tabpanel" aria-labelledby="pills-absence-tab">
+                <div id="abs-loader" class="loader loader-small"></div>
+                <table class="table table-striped" id="abs-table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">TEC #</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Permissions</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody id="abs-tbody">
+                    </tbody>
+                </table>
+                <div align="center" style="margin-top: 48px;">
+                    <ul class="pagination">
+                        <li class="page-item"><a class="page-link" onclick="absPrevPage()">Prev</a></li>
+                        <li class="page-item active"><span class="page-link" id="page-no">1</span></li>
+                        <li class="page-item"><a class="page-link" onclick="absNextPage()">Next</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
     <div id="main-loader" class="loader loader-big"></div>
 </div>
 <script src="<?=BASE_URL?>/js/meetings-view.js" defer="defer"></script>
+<script src="<?=BASE_URL?>/js/meetings-view-attn.js" defer="defer"></script>
+<script src="<?=BASE_URL?>/js/meetings-view-abs.js" defer="defer"></script>
