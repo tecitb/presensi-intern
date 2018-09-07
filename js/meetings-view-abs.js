@@ -18,7 +18,7 @@ function loadAbsence(page) {
         headers: {"Authorization": "Bearer " + Cookies.get("token")}
     }).done(function(msg) {
         absCurrentPage = page;
-        $("#page-no").text(page);
+        $("#abs-page-no").text(page);
         $("#abs-loader").hide();
         $("#abs-table").show();
         $("#abs-tbody").html("");

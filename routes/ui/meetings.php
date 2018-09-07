@@ -54,3 +54,12 @@ $app->get('/meetings/attn/{id}', function ($request, $response, $args) {
     $this->renderer->render($response, "/meetings_view_attn_edit.php", $args);
     return $this->renderer->render($response, "/footer.php", $args);
 });
+
+/**
+ * Add absence view
+ */
+$app->get('/meetings/rdabs/{id}', function ($request, $response, $args) {
+    $this->renderer->render($response, "/header.php", $args);
+    $this->renderer->render($response, "/meetings_view_abs_record.php", $args);
+    return $this->renderer->render($response, "/footer.php", $args);
+});

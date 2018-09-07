@@ -44,22 +44,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card card-inp" style="margin-top: 16px;">
-                <div class="card-header">Entry authorization</div>
-                <div class="card-body">
-                    <label for="attn-notes">Additional notes</label>
-                    <textarea id="attn-notes" class="form-control"></textarea>
-                    <div style="margin-top: 32px;">
-                        <button type="button" id="btn-cancel" class="btn btn-secondary">Cancel</button>
-                        &nbsp;
-                        <button type="button" id="btn-grant" class="btn btn-success">Grant entry</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
             <div class="card card-inp" style="margin-top: 16px;" id="person-card">
-                <div class="card-header">Person details</div>
                 <div class="card-body" style="background: #fbfbfb">
                     <div class="img-circle" id="profile-url">
                     </div>
@@ -70,6 +55,8 @@
 
                 </div>
             </div>
+        </div>
+        <div class="col-md-6">
             <div class="card card-inp" style="margin-top: 16px;">
                 <div class="card-header">Absence notices</div>
                 <div>
@@ -87,6 +74,18 @@
                             <span class="badge badge-primary badge-pill">1</span>
                         </li>
                     </ul>
+                </div>
+            </div>
+            <div class="card card-inp" style="margin-top: 16px;">
+                <div class="card-header">Entry authorization</div>
+                <div class="card-body">
+                    <label for="attn-notes">Additional notes</label>
+                    <textarea id="attn-notes" class="form-control"></textarea>
+                    <div style="margin-top: 32px;">
+                        <button type="button" id="btn-cancel" class="btn btn-secondary">Cancel</button>
+                        &nbsp;
+                        <button type="button" id="btn-grant" class="btn btn-success">Grant entry</button>
+                    </div>
                 </div>
             </div>
         </div>

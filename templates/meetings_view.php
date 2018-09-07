@@ -114,6 +114,12 @@
             </div>
             <div class="tab-pane fade" id="pills-attn" role="tabpanel" aria-labelledby="pills-attn-tab">
                 <div id="attn-loader" class="loader loader-small"></div>
+
+                <div style="margin-bottom: 16px">
+                    <a href="<?=BASE_URL?>/meetings/rdattn/<?=$id?>" target="_blank"><button class="btn btn-secondary">Record attendance</button></a>
+                    <a href="<?=BASE_URL?>/wibu/<?=$id?>" target="_blank"><button class="btn btn-secondary">WiBU</button></a>
+                </div>
+
                 <table class="table table-striped" id="attn-table">
                     <thead>
                     <tr>
@@ -134,12 +140,16 @@
                         <li class="page-item"><a class="page-link" onclick="attnNextPage()">Next</a></li>
                     </ul>
                 </div>
-                <a href="<?=BASE_URL?>/meetings/rdattn/<?=$id?>" target="_blank"><button id="btn-delete" class="btn btn-secondary">Record attendance</button></a>
-                <a href="<?=BASE_URL?>/wibu/<?=$id?>" target="_blank"><button class="btn btn-secondary">WiBU</button></a>
 
             </div>
             <div class="tab-pane fade" id="pills-absence" role="tabpanel" aria-labelledby="pills-absence-tab">
                 <div id="abs-loader" class="loader loader-small"></div>
+
+                <div style="margin-bottom: 16px">
+                    <a href="<?=BASE_URL?>/meetings/rdabs/<?=$id?>" target="_blank"><button class="btn btn-secondary">Record absence</button></a>
+                </div>
+
+
                 <table class="table table-striped" id="abs-table">
                     <thead>
                     <tr>
@@ -156,7 +166,7 @@
                 <div align="center" style="margin-top: 48px;">
                     <ul class="pagination">
                         <li class="page-item"><a class="page-link" onclick="absPrevPage()">Prev</a></li>
-                        <li class="page-item active"><span class="page-link" id="page-no">1</span></li>
+                        <li class="page-item active"><span class="page-link" id="abs-page-no">1</span></li>
                         <li class="page-item"><a class="page-link" onclick="absNextPage()">Next</a></li>
                     </ul>
                 </div>
