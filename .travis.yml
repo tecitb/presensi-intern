@@ -1,0 +1,16 @@
+sudo: required
+
+language: php
+
+php:
+  - '7.2'
+
+services:
+  - docker
+
+before_script: composer install
+
+script:
+  - docker build -t tec/intern-presence .
+  - docker tag tec/intern-presence node2.didithilmy.com/tec/intern-presence
+  - docker push node2.didithilmy.com/tec/intern-presence
