@@ -3,26 +3,10 @@
  */
 
 $(document).ready(function() {
-    loadMeeting().done(function(msg) {
-       parseMeeting(msg.body);
-    });
-
-    $("#btn-lookup").on('click', function() {
-        getUserDetails();
-    });
-
-    $("#abs-tec_regno").keypress(function(e) {
-        if(e.which == 13) {
-            getUserDetails();
-        }
-    });
-
-    $("#btn-cancel").on('click', function() {
-        $(".e-user").hide();
-    });
+    init();
 
     $("#btn-submit").on('click', function() {
-        if(confirm("Confirm to record absence?")) {
+        if(confirm("Confirm to update absence?")) {
             recordAbsence();
         }
     });
@@ -30,12 +14,33 @@ $(document).ready(function() {
 
 var currentUser;
 
-function loadMeeting() {
+function init() {
+    loadAbsence().done(function(msg) {
+        parseAbsence(msg.body);
+        getUserDetails(msg.body.tec_regno);
+        loadMeeting(msg.body.meeting_id).done(function(msg) {
+            parseMeeting(msg.body);
+        });
+    });
+}
+
+function loadAbsence() {
+    console.log("Loading absence...");
+
+    return $.ajax({
+        method: "GET",
+        url: BASE_URL+"/api/absence/details/" + ABS_ID,
+        headers: {"Authorization": "Bearer " + Cookies.get("token")}
+    });
+}
+
+
+function loadMeeting(meeting_id) {
     console.log("Loading data...");
 
     return $.ajax({
         method: "GET",
-        url: BASE_URL+"/api/meetings/details/" + MEETING_ID,
+        url: BASE_URL+"/api/meetings/details/" + meeting_id,
         headers: {"Authorization": "Bearer " + Cookies.get("token")}
     });
 }
@@ -44,9 +49,30 @@ function parseMeeting(data) {
     $("#meeting-name").text(data.name);
 }
 
-function getUserDetails() {
+function parseAbsence(data) {
+    $("#type").val(data.type);
+    $("#urgency").val(data.urgency);
+    $("#abs-notes").text(data.notes);
+
+    var timestamp;
+    if(data.type == 1) {
+        timestamp = new Date(data.will_attend * 1000);
+    } else if(data.type == 2) {
+        timestamp = new Date(data.will_leave * 1000);
+    } else {
+        timestamp = new Date();
+    }
+
+    $('#sch').datetimepicker({
+        inline: true,
+        sideBySide: true,
+        timeZone: 'Asia/Jakarta',
+        defaultDate: timestamp
+    });
+}
+
+function getUserDetails(tec_regno) {
     $(".e-user").hide();
-    let tec_regno = $("#abs-tec_regno").val();
     currentUser = null;
     $.ajax({
         method: "GET",
@@ -64,7 +90,6 @@ function getUserDetails() {
 
         $("#name").text(msg.name);
         $("#tec_regno").text(msg.tec_regno);
-        $("#abs-notes").val("");
         if(msg.profile_picture_url != undefined) $("#profile-url").css("background-image", "url(" + msg.profile_picture_url + ")");
         else $("#profile-url").css("background-image", "");
 
@@ -91,11 +116,9 @@ function recordAbsence() {
     if(currentUser !== null) {
         let time = $("#sch").datetimepicker("viewDate").unix();
         $.ajax({
-            method: "POST",
-            url: BASE_URL + "/api/absence/record/" + MEETING_ID,
+            method: "PUT",
+            url: BASE_URL + "/api/absence/update/" + ABS_ID,
             data: {
-                tec_regno: currentUser.tec_regno,
-                name: currentUser.name,
                 notes: $("#abs-notes").val(),
                 type: $("#type").val(),
                 urgency: $("#urgency").val(),
@@ -105,15 +128,13 @@ function recordAbsence() {
             headers: {"Authorization": "Bearer " + Cookies.get("token")}
         }).done(function (msg) {
             if (msg.success !== true) {
-                alert("Failed recording absence");
+                alert("Failed updating absence");
                 console.log(msg.error);
-
                 return;
             }
 
-            $(".e-user").hide();
-
-            currentUser = null;
+            alert("Absence record updated!");
+            init();
         }).fail(function (jqXHR, textStatus) {
             alert("Request failed: " + textStatus);
         });

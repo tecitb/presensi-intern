@@ -54,6 +54,27 @@ $app->get('/absence/get/{mid}/{regno}', function ($request, $response, $args) {
 });
 
 /**
+ * Get absence by ID
+ */
+$app->get('/absence/details/{id}', function ($request, $response, $args) {
+    if (!DEBUG_DISABLE_AUTH && $request->getAttribute("jwt")['isAdmin'] != 1) {
+        $error = ['error' => ['text' => 'Permission denied']];
+        return $response->withJson($error);
+    }
+
+    $absence = R::load('absence', $args['id']);
+
+    if($absence->id == 0) {
+        // Not found
+        return $response->withJson(["success" => false, "error" => "NOT_FOUND", "msg" => "Absence record is not found"]);
+    }
+
+    return $response->withJson(
+        ["success" => true, "body" => $absence]
+    );
+});
+
+/**
  * Record absence
  * Note:
  * Absence type: 0 is not attending, 1 is coming late, 2 is leaving early
@@ -135,11 +156,19 @@ $app->put('/absence/update/{aid}', function ($request, $response, $args) {
     }
 
     // Attendance record found, update data
-    if(!empty($request->getParam("notes"))) $abs->notes = $request->getParam("notes");
-    if(!empty($request->getParam("type"))) $abs->type = $request->getParam("type");
-    if(!empty($request->getParam("urgency"))) $abs->urgency = $request->getParam("urgency");
+    if($request->getParam("notes") !== null) $abs->notes = $request->getParam("notes");
     if(!empty($request->getParam("will_attend"))) $abs->will_attend = $request->getParam("will_attend");
     if(!empty($request->getParam("will_leave"))) $abs->will_leave = $request->getParam("will_leave");
+
+    if($request->getParam("type") !== null) {
+        $type = $request->getParam("type");
+        $abs->type = ($type == "0" || $type == "1" || $type == "2") ? $type : "0";
+    }
+
+    if($request->getParam("urgency") !== null) {
+        $urgency = $request->getParam("urgency");
+        $abs->urgency = ($urgency == "0" || $urgency == "1") ? $urgency : "0";
+    }
 
     R::store($abs);
 
